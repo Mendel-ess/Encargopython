@@ -1,16 +1,39 @@
+import pandas as pd
+from tabulate import tabulate
 import csv
 
 estado = True
 
+def generar_tabla(ruta,estado_index,formato):
+    with open(ruta, newline='') as f:
+        reader = csv.reader(f, delimiter=',')
+        j=0 
+        for row in reader:
+            if j == 0: 
+                headers = list(row)
+                j+=1
+            else:
+                if estado_index:
+                    headers.insert(0, "ID")
+                break
+    df = pd.read_csv(link)
+    print(tabulate(df, headers, tablefmt=formato, showindex=estado_index))
+
 def guardar_csv():
     archivo_csv = True
-    print("Archivo guardado correctamente...")
+    print("\nArchivo guardado correctamente...\n")
 
 def describir_datos(link):
-    with open(link, newline='') as f:
-        reader = csv.reader(f, delimiter=',')
-        for row in reader:
-            print(row)
+    generar_tabla(link, False, "simple")
+
+def mostrar_datos(link):
+    generar_tabla(link, True, "outline")
+
+def filtrar_registros():
+    df = pd.read_csv(url)
+    filtro = input("Digite la condicion para filtrar de la siguiente manera:\n Nombre de la columna comparativa valor\nAviso: la comparativa se lleva con los simbolos mayor que, menor que, o igual\n para el igual se recomienda usar \'==\'\n: ")
+    df1 = df.query(filtro)
+    print(tabulate(df1, tablefmt="outline", showindex=False))
 
 while(estado):
     print("Cual de las siguientes opciones desea realizar:\n1. Ingresar/actualizar archivo CSV")
@@ -24,11 +47,11 @@ while(estado):
     elif opc == 2:
         describir_datos(url)
     elif opc == 3:
-        pass
+        mostrar_datos(url)
     elif opc == 4:
         pass
     elif opc == 5:
-        pass
+        filtrar_registros()
     elif opc == 6:
         pass
     elif opc == 7:
