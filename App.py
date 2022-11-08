@@ -53,7 +53,8 @@ def eliminar_registro(n_index):
     df = df.drop(df.index[n_index])
     generar_tabla(df, "outline")
 def exportar_csv():
-    pass
+    global df
+    df.to_csv(nuevo.csv, index=False)
 
 def inicio():
     estado = True
