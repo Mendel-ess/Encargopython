@@ -1,9 +1,10 @@
-import pandas as pd
-from tabulate import tabulate
 import csv
 
+import pandas as pd
+from tabulate import tabulate
 
-global df
+ruta = "consumo-alcohol.csv"
+df = pd.read_csv(ruta, delimiter=',')
 
 def generar_tabla(dataframe, formato):
         global df
@@ -12,10 +13,20 @@ def generar_tabla(dataframe, formato):
             head.insert(0, "ID")
             print(tabulate(dataframe, head,  tablefmt=formato, showindex=True))
         else:
+            
             print(tabulate(dataframe, dataframe.head(),  tablefmt=formato, showindex=False))
         print(dataframe.columns.tolist())
         
-
+def modificar(dataframe, formato):
+        global df
+        if formato == "outline":
+            head = list(dataframe.head())
+            head.insert(0, "ID")
+            print(tabulate(dataframe, head,  tablefmt=formato, showindex=True))
+        else:
+            
+            print(tabulate(dataframe, dataframe.head(),  tablefmt=formato, showindex=False))
+        print(dataframe.columns.tolist())
         
 
 def guardar_csv():
@@ -46,15 +57,20 @@ def agregar_registro(dts):
     df = df.append(dts, ignore_index=True)
     generar_tabla(df, "outline")
 
-def modifcar_registro():
-    pass
+def Editar(fila):
+    global df
+    modificar(df.loc[[fila]], "outline")
+    columna = input("digite la columna que quiere modificar ")
+    valor = input("digite el valor con el que desea modificar ")
+    modificar(df.replace(columna,valor),"outline")
+    
 def eliminar_registro(n_index):
     global df
     df = df.drop(df.index[n_index])
     generar_tabla(df, "outline")
 def exportar_csv():
     global df
-    df.to_csv(nuevo.csv, index=False)
+    df.to_csv("nuevo.csv", index=False)
 
 def inicio():
     estado = True
@@ -93,7 +109,8 @@ def inicio():
             data = {'Pais': pais,'Cervesas_tomadas': ct,'Bebidas_alcoholicas_tomadas':bat,'Vino_tomado': vt,'Total_de_alcohol_puro_en_litros': ta}
             agregar_registro(data)
         elif opc == 7:
-            modifcar_registro()
+            indice = int(input("escriba la fila donde se encuentra lo que se desea modificar "))
+            Editar(indice)
         elif opc == 8:
             num = int(input("Digite el indice a eleminar: "))
             eliminar_registro(num)
