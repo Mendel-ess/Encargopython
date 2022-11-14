@@ -75,8 +75,8 @@ def exportar_csv():
 def inicio():
     estado = True
     while(estado):
-        print("Cual de las siguientes opciones desea realizar:\n1. Ingresar/actualizar archivo CSV")
-        print("\n2. Describir datos\n3. Mostrar datos\n4. Ordenar registros\n5. Filtrar registros\n6. Agregar registros")
+        print("\nCual de las siguientes opciones desea realizar:\n1. Ingresar/actualizar archivo CSV")
+        print("2. Describir datos\n3. Mostrar datos\n4. Ordenar registros\n5. Filtrar registros\n6. Agregar registros")
         print("7. Modificar registros\n8. Eliminar registros\n9. Exportar/Guardar datos\n0. Salir\n")
         opc = int(input("Ingrese su opcion a realizar: "))
 
